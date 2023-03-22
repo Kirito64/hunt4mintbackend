@@ -46,7 +46,7 @@ const signIn = async (req, res, next)=>{
 				const _user = await User.findOne({where: {
 					email : user.email,
 				}})
-				const token = jwt.sign({email: _user.email}, jwtSecret);
+				const token = jwt.sign({email: _user.email, id: _user.id}, jwtSecret);
 				return res.json({
 					token: token,
 					message: "user found and logged in",

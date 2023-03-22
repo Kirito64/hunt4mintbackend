@@ -1,6 +1,6 @@
 const sequelize = require("sequelize");
 
 
-const Sequelize = new sequelize("postgres://postgres:postgrespw@localhost:32768/hunt4mint");
+const Sequelize = new sequelize("postgres://hunt4mint:hunt4mint@43.205.223.94:5432/hunt4mint");
 
 module.exports = Sequelize;
