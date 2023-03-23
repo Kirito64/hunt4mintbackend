@@ -23,14 +23,14 @@ const user = sequelize.define("user", {
 		type: DataTypes.STRING,
 		requried: true,
 	},
-	// location :{
-	// 	type: DataTypes.STRING,
-	// 	required: true,
-	// },
-	// industry: {
-	// 	type: DataTypes.STRING,
-	// 	required: true,
-	// }
+	location :{
+		type: DataTypes.STRING,
+		required: true,
+	},
+	industry: {
+		type: DataTypes.STRING,
+		required: true,
+	}
 })
 
 module.exports = user;
