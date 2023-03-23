@@ -7,9 +7,7 @@ const localStrategy = new LocalStrategy({
 	usernameField: "email",
 	passwordField: "password"
 },async (email, password,done)=>{
-	console.log(email, password);
-	const user = await User.findOne({email: email});
-	console.log(user.email)
+	const user = await User.findOne({where: {email: email}});
 	if(!user){
 		return done(null, false, {message: "User not found"});
 	}

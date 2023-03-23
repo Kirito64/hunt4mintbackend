@@ -5,15 +5,13 @@ const passport  = require("../config/passport");
 const jwtSecret = "agkjaslhdgaelghjwds9ighasdg";
 
 const signUp = async(req, res)=>{
-	const usertemp = await User.findOne({email: req.body.email})
+	const usertemp = await User.findOne({where:{email: req.body.email}})
 
 	if(usertemp){
 		return res.status(400).json({
 			message: "User with that email already exists",
 		});
 	}
-
-	console.log(req.body)
 	const hashPassword = bcrypt.hashSync(req.body.password, 10);
 	
 	const data = {
@@ -39,12 +37,18 @@ const signIn = async (req, res, next)=>{
 			res.send({error: "something went wrong"});
 		}        
 		else{
-			req.login(user,{session: false}, async err =>{
+			req.login(user,{session: false}, async (err) =>{
 				if(err){
 					res.status(502).send({error:"Something went wrong"});
+					return;
 				}
+				if(user === false){
+					res.status(502).send({error:"Incorrect Password"});
+					return;	
+				}
+				let userdata = await User.findOne({where:{id: user.id}})
 				const _user = await User.findOne({where: {
-					email : user.email,
+					email : userdata.email,
 				}})
 				const token = jwt.sign({email: _user.email, id: _user.id}, jwtSecret);
 				return res.json({
